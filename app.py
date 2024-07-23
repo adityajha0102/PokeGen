@@ -29,12 +29,12 @@ def generate():
         try:
             data = request.get_json()
             user_prompt = data.get("user_prompt", "")
-            base_hp = validate_base_parameter(data.get("base_hp"), "Base HP", 10, 99)
-            base_speed = validate_base_parameter(data.get("base_speed"), "Base Speed", 10, 99)
-            base_defense = validate_base_parameter(data.get("base_defense"), "Base Defense", 10, 89)
-            base_attack = validate_base_parameter(data.get("base_attack"), "Base Attack", 10, 89)
-            base_special_defense = validate_base_parameter(data.get("base_special_defense"), "Base Special Defense", 10, 99)
-            base_special_attack = validate_base_parameter(data.get("base_special_attack"), "Base Special Attack", 10, 99)
+            base_hp = validate_base_parameter(user_prompt.get("base_hp"), "Base HP", 10, 99)
+            base_speed = validate_base_parameter(user_prompt.get("base_speed"), "Base Speed", 10, 99)
+            base_defense = validate_base_parameter(user_prompt.get("base_defense"), "Base Defense", 10, 89)
+            base_attack = validate_base_parameter(user_prompt.get("base_attack"), "Base Attack", 10, 89)
+            base_special_defense = validate_base_parameter(user_prompt.get("base_special_defense"), "Base Special Defense", 10, 99)
+            base_special_attack = validate_base_parameter(user_prompt.get("base_special_attack"), "Base Special Attack", 10, 99)
             
         except AttributeError as ae:
             # Handle attribute errors (e.g., if request.get_json() fails)
