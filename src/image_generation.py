@@ -60,9 +60,3 @@ def generate_image(prompt: str):
 
     return img
 
-
-'''if __name__ == "__main__":
-    preprocessed_prompt = process_generation_prompt(llm, "A big bad frog")
-    if preprocessed_prompt != "This application can only generate Pokemon images. Try Again" or preprocessed_prompt != "Somthing went wrong. Try a different prompt":
-        print(generate_image(preprocessed_prompt))
-'''
