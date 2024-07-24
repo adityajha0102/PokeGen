@@ -6,6 +6,7 @@ from src.image_generation import get_Image
 from src.stats_generation import hp_stats, minmax_stats, get_info
 from src.process_data import process_dataset
 from src.battle_generation import get_battle_details
+from src.top_list import top_pokemon
 
 from helpers.validate import validate_base_parameter, validate_special_parameter
 from helpers.llm_utils import llm
@@ -120,6 +121,16 @@ def battle_simulate():
         return jsonify(result) 
     except:
         return jsonify({'error': "Something went wrong"}), 404
+    
+@app.route('/top_count', methods=['POST'])
+def top_count():
+    query = dict()
+    db, fs = connect_db()
+    pokemon_all = search_files(db, fs, query, 'top')
+    pokemon_all_list = []
+    for i in pokemon_all:
+        pokemon_all_list.append(i['metadata'])
+    return top_pokemon(pokemon_all_list)
 
 # Run the Flask app
 #if __name__ == '__main__':
