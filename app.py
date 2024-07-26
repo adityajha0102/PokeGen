@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS
 import pandas as pd
 
 from src.image_generation import get_Image
@@ -17,6 +18,7 @@ from helpers.errors import AppError, ValidationError, NotFoundError
 
 load_dotenv()
 app = Flask(__name__)
+CORS(app)
 
 @app.errorhandler(AppError)
 def handle_app_error(error):
