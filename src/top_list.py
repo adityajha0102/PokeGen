@@ -1,4 +1,7 @@
 import pandas as pd
+from helpers.db_search import search_image
+from helpers.db_connect import connect_db
+from bson import ObjectId
 
 def get_pokemon_df(pokemon_all):
     pokemon_list = []
@@ -31,6 +34,11 @@ def top_pokemon(pokemon_all):
     top_2_percent_threshold = sorted_df['Combined Score'].quantile(0.98)
     top_2_percent_pokemon = sorted_df[sorted_df['Combined Score'] >= top_2_percent_threshold]
 
+    db, fs = connect_db()
+    for index, row in top_2_percent_pokemon.iterrows():
+        row['_id'] = ObjectId(row['_id'])
+        image_data = search_image(db, fs, row)
+        top_2_percent_pokemon.at[index, 'image_data'] = image_data
     # Display the top 2% Pokémon
     json_data = top_2_percent_pokemon.to_json(orient='records')
     return json_data
