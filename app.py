@@ -109,8 +109,9 @@ def delete_all():
 def search():
     data = request.get_json()
     query_fields = dict(data.get("query", ""))
+    last_id = data.get("last_id", "")
     db, fs = connect_db()
-    return search_files(db, fs, query_fields)    
+    return jsonify(search_files(db, fs, query_fields, last_id=last_id))    
 
 @app.route('/battle_simulate', methods=['POST'])
 def battle_simulate():
@@ -128,12 +129,13 @@ def battle_simulate():
 def top_count():
     query = dict()
     db, fs = connect_db()
-    pokemon_all = search_files(db, fs, query, 'top')
+    pokemon_all = search_files(db, fs, query, check='top')
     pokemon_all_list = []
     for i in pokemon_all:
+        i['metadata']['_id'] = i['_id']
         pokemon_all_list.append(i['metadata'])
     return top_pokemon(pokemon_all_list)
 
 # Run the Flask app
-#if __name__ == '__main__':
-#    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
